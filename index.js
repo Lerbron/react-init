@@ -53,6 +53,8 @@ program.version('1.0.0', '-v, --version')
               dt.description = '{{description}}'
               const result = handlebars.compile(JSON.stringify(dt, null, 2))(meta);
               fs.writeFileSync(filename, result);
+              shell.cd(name);
+              shell.rm('-rf', '.git');
               console.log(symbols.success, chalk.green('项目初始化完成'));
             } else {
               console.log(symbols.error, chalk.red('package不存在'))
