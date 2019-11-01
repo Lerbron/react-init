@@ -8,9 +8,7 @@ const inquirer = require('inquirer');
 const shell = require('shelljs');
 const symbols = require('log-symbols');
 const download = require('download-git-repo');
-const child_process = require('child_process');
 const handlebars = require('handlebars');
-const path = require('path');
 
 program.version('1.0.0', '-v, --version')
   .command('init <name>')
@@ -19,20 +17,21 @@ program.version('1.0.0', '-v, --version')
 
     if (!fs.existsSync(name)) {
       console.log('正在创建项目...');
-      inquirer.prompt([
-        {
-            name: 'description',
-            message: '请输入项目描述'
+      inquirer.prompt([{
+          name: 'description',
+          message: '请输入项目描述'
         },
         {
-            name: 'author',
-            message: '请输入作者名称'
+          name: 'author',
+          message: '请输入作者名称'
         }
       ]).then(answers => {
         const spinner = ora('正在向下载模板...\n');
         spinner.start();
 
-        download('direct:https://github.com/Lerbron/react-temp.git', name, {clone: true}, err => {
+        download('direct:https://github.com/Lerbron/react-temp.git', name, {
+          clone: true
+        }, err => {
           if (err) {
             spinner.fail();
             console.log(symbols.error, chalk.red('模板下载失败'))
@@ -69,4 +68,4 @@ program.version('1.0.0', '-v, --version')
 
   })
 
-  program.parse(process.argv);
+program.parse(process.argv);
